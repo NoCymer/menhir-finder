@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-black text-white flex items-center justify-center min-h-screen">
+    <div class="bg-gray-800 p-8 rounded-lg max-w-sm w-full">
+        <div class="flex justify-center mb-4">
+            <img src="../assets/img/logo.png" alt="Logo" class="w-20">
+        </div>
+        <h2 class="text-2xl font-bold text-center mb-6">Se connecter</h2>
+        <form>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1" for="email">Email</label>
+                <div class="relative">
+                    <input class="w-full px-4 py-2 border rounded-lg bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500" type="email" id="email" placeholder="Email">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M21 8V7l-3 2-3-2v1l3 2 3-2zM3 19h18v-8h-2v6H5v-6H3v8zm6.293-9.293l-1.293 1.293L12 17l4-4-1.293-1.293L12 14.414l-2.707-2.707zM21 6.586L12 12 3 6.586V5h18v1.586z"></path></svg>
+                    </span>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1" for="password">Mot de passe</label>
+                <div class="relative">
+                    <input class="w-full px-4 py-2 border rounded-lg bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500" type="password" id="password" placeholder="Mot de passe">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M17 9V7a5 5 0 0 0-10 0v2H5v12h14V9h-2zm-8-2a3 3 0 0 1 6 0v2H9V7z"></path></svg>
+                    </span>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="inline-flex items-center">
+                    <input type="checkbox" class="form-checkbox bg-gray-700 border-gray-600 text-blue-500">
+                    <span class="ml-2 text-sm">Se souvenir de moi</span>
+                </label>
+            </div>
+            <div>
+                <button class="w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg font-semibold text-sm custom-button" type="submit">CONNEXION</button>
+            </div>
+        </form>
+        <div class="mt-4 text-center">
+            <a href="create_account.html" class="text-sm text-blue-500 hover:text-blue-600">Créer un compte</a>
+        </div>
+    </div>
+</body>
+</html>
