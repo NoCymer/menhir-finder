@@ -11,13 +11,16 @@
             font-family: 'Poppins', sans-serif;
         }
         .custom-button {
-            background-color: #7F9CF5;
-            color: white;
+            background-color: #B6D6FF;
+            color: rgb(0, 0, 0);
             padding: 0.5rem 1rem;
             border-radius: 0.25rem;
             text-align: center;
             display: inline-block;
             width: 100%;
+        }
+        .custom-card {
+            background-color: #2F3233;
         }
     </style>
 </head>
@@ -29,7 +32,7 @@
     </div>
     
     <!-- Carte principale -->
-    <div class="w-full max-w-md p-4 bg-gray-800 rounded-lg shadow-md mt-4">
+    <div class="w-full max-w-md p-4 custom-card rounded-lg shadow-md mt-4">
         <div class="flex justify-center">
             <img src="../assets/img/img_card.png" alt="Astérix et Obélix" class="w-32 h-32 object-cover">
         </div>
@@ -42,11 +45,11 @@
     
     <!-- Cartes secondaires -->
     <div class="flex justify-between w-full max-w-md mt-4 space-x-4">
-        <div class="w-1/2 bg-gray-800 rounded-lg shadow-md p-4 flex flex-col items-center">
+        <div class="w-1/2 custom-card rounded-lg shadow-md p-4 flex flex-col items-center">
             <img src="../assets/img/img_card2.png" alt="Historique" class="w-20 h-20 object-cover mb-2">
             <h2 class="text-white text-lg font-bold">Historique</h2>
         </div>
-        <div class="w-1/2 bg-gray-800 rounded-lg shadow-md p-4 flex flex-col items-center">
+        <div class="w-1/2 custom-card rounded-lg shadow-md p-4 flex flex-col items-center">
             <img src="../assets/img/img_card3.png" alt="Statistiques" class="w-20 h-20 object-cover mb-2">
             <h2 class="text-white text-lg font-bold">Statistiques</h2>
         </div>
