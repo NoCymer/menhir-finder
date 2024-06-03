@@ -2,9 +2,9 @@
 
 ## Creators
 
-> RIVIERE--JOMBART Diego <br>
-> MAMMERI Rayan <br>
-> RIGARD Lobsang <br>
+> RIVIERE--JOMBART Diego  
+> MAMMERI Rayan  
+> RIGARD Lobsang  
 
 ## Prerequisites
 
