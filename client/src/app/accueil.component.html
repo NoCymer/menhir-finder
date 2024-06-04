@@ -24,7 +24,7 @@
         }
     </style>
 </head>
-<body class="bg-black flex flex-col items-center min-h-screen font-poppins">
+<body class="bg-black flex flex-col items-center min-h-screen font-poppins p-4">
     <!-- Logo et bouton de connexion -->
     <div class="flex justify-between items-center w-full max-w-md p-4">
         <img src="../assets/img/logo.png" alt="Logo" class="w-16 h-auto">
@@ -32,7 +32,7 @@
     </div>
     
     <!-- Carte principale -->
-    <div class="w-full max-w-md p-4 custom-card rounded-lg shadow-md mt-4">
+    <div class="w-full max-w-md p-4 custom-card rounded-lg shadow-md mt-4 mx-2">
         <div class="flex justify-center">
             <img src="../assets/img/img_card.png" alt="Astérix et Obélix" class="w-32 h-32 object-cover">
         </div>
@@ -44,7 +44,7 @@
     </div>
     
     <!-- Cartes secondaires -->
-    <div class="flex justify-between w-full max-w-md mt-4 space-x-4">
+    <div class="flex justify-between w-full max-w-md mt-4 space-x-4 mx-2">
         <div class="w-1/2 custom-card rounded-lg shadow-md p-4 flex flex-col items-center">
             <img src="../assets/img/img_card2.png" alt="Historique" class="w-20 h-20 object-cover mb-2">
             <h2 class="text-white text-lg font-bold">Historique</h2>
@@ -56,7 +56,7 @@
     </div>
     
     <!-- Barre de navigation -->
-    <nav class="bg-gray-800 w-full mt-auto py-4">
+    <nav class="bg-gray-800 w-full mt-auto py-4 md:fixed md:bottom-0">
         <ul class="flex justify-around text-white">
             <li>
                 <a href="#" class="flex flex-col items-center">
@@ -91,7 +91,7 @@
             <li>
                 <a href="#" class="flex flex-col items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6.75h.008v.008h-.008V6.75ZM8.25 6.75h.008v.008H8.25V6.75ZM21 12a8.25 8.25 0 1 1-16.5 0 8.25 8.25 0 0 1 16.5 0ZM8.25 9.75a.75.75 0 1 0 0 1.5h7.5a.75.75 0 0 0 0-1.5h-7.5Zm-.75 4.5c0 .621.504 1.125 1.125 1.125h7.5c.621 0 1.125-.504 1.125-1.125v-.375c0-.621-.504-1.125-1.125-1.125h-7.5c-.621 0-1.125.504-1.125 1.125v.375Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 9.75v4.5M13.875 9.75v4.5M21.75 6.75v10.5a4.5 4.5 0 0 1-4.5 4.5H6.75a4.5 4.5 0 0 1-4.5-4.5V6.75M4.875 6.75V4.5a2.25 2.25 0 0 1 2.25-2.25h9.75a2.25 2.25 0 0 1 2.25 2.25v2.25" />
                     </svg>
                 </a>
             </li>
