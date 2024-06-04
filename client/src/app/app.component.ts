@@ -12,12 +12,11 @@ import { Card2Component } from './components/card/SecondaryCard/card2.component'
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit{
   constructor(
     private matIconReg: MatIconRegistry
   ) {}
-
   ngOnInit(): void {
-      
+    this.matIconReg.setDefaultFontSetClass('material-symbols-outlined');
   }
 }

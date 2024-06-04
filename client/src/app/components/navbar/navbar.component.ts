@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MatIcon, MatIconRegistry } from '@angular/material/icon';
-import { RouterOutlet } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'navbar',
