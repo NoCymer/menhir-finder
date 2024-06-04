@@ -28,6 +28,14 @@
     <!-- Logo et bouton de connexion -->
     <div class="flex justify-between items-center w-full max-w-md p-4">
         <img src="../assets/img/logo.png" alt="Logo" class="w-16 h-auto">
+            <!-- Barre de navigation desktop qui spawn quand l'autre disparait -->
+            <nav class="desktop-navbar hidden md:flex">
+                <ul class="flex space-x-4 text-white">
+                    <li><a href="#" class="text-white">Accueil</a></li>
+                    <li><a href="#" class="text-white">Historique</a></li>
+                    <li><a href="#" class="text-white">Statistiques</a></li>
+                </ul>
+            </nav>
         <button href="connexion.component.html" class="border-2 border-white text-white py-1 px-4 rounded-full">Connexion</button>
     </div>
     
@@ -54,9 +62,12 @@
             <h2 class="text-white text-lg font-bold">Statistiques</h2>
         </div>
     </div>
+
+
+
     
-    <!-- Barre de navigation -->
-    <nav class="bg-gray-800 w-full mt-auto py-4 md:fixed md:bottom-0">
+    <!-- Barre de navigation mobile qui se cacha a partir d'une certaine dimension -->
+    <nav class="bg-gray-800 w-full py-4 fixed bottom-0 md:hidden">
         <ul class="flex justify-around text-white">
             <li>
                 <a href="#" class="flex flex-col items-center">
