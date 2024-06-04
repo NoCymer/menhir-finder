@@ -3,8 +3,8 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'card',
-  templateUrl: './card.component.html',
-  styleUrl: './card.component.scss',
+  templateUrl: './primary-card.component.html',
+  styleUrl: './primary-card.component.scss',
   standalone: true,
 })
 export class CardComponent {
