@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'header',
@@ -9,4 +9,12 @@ import { RouterOutlet } from '@angular/router';
 })
 export class HeaderComponent {
   @Input() src="";
+
+  constructor(
+    router: Router
+  ){
+    router.navigate(["/login"])
+  }
 }
+
+
