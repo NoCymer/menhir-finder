@@ -2,154 +2,191 @@
 
 require_once __DIR__ . '/../db/DBConnection.php';
 
+
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\UploadedFileInterface as UploadFile;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
 
-/**
- *  Post Image and Make a guess ('Asterix' or 'Obelix') :
-**/
-$app->post('/api/guesses', function (Request $request, Response $response) {
-    $supportedMediaTypes = ["image/jpeg", "image/jpg", "image/png"];
 
-    //retrieve upload directory from config ==> $directory
-    $directory = '/data/';
+
+/* Post Image and Make a guess ('Asterix' or 'Obelix') */
+$app->post('/api/guesses', function (Request $request, Response $response) {
+    //retrieve upload directory from config
+    $directory = $this->get('upload_directory');
 
     //get files from multipart request
-    $files = $request->getUploadedFiles();
+    $uploadedFiles = $request->getUploadedFiles();
 
-    // get 'guessimage' uploaded file (if field doesn't exist ==> status http 400)
-    //test if uploadedFile error === UPLOAD_ERR_OK (everything OK)
-    if ($files["guessimage"] != null) {
+    
+    // handle single input with single file upload
+    if (array_key_exists("guessimage", $uploadedFiles)){
+        $uploadedFile = $uploadedFiles['guessimage'];
+    }
+    else{
+        $uploadedFile = null;
+    }
+    
+    if ( $uploadedFile!=null && ($uploadedFile->getError() === UPLOAD_ERR_OK)) {
 
-        //test media type == 'image/jpeg' or 'image/jpg' or 'image/png'
-        if (array_search($files["guessimage"]->getClientMediaType(), $supportedMediaTypes))
+        if ($uploadedFile->getClientMediaType() == 'image/jpeg' || $uploadedFile->getClientMediaType() == 'image/jpg' || $uploadedFile->getClientMediaType() == 'image/png'  )
         {
-            //generate guess id = time in MilliSeconds (use microtime function)
-            $guessId = floor(microtime(true) * 1000);
-            //generate current date
-            $date = date("");
+            $id = (int) round(microtime(true) * 1000);
+            $date = date(DATE_RFC2822, $id/1000);
 
-            //write image locally 
+            //write image locally
+            $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+            $filename = sprintf('%d.%0.8s', $id, $extension);
+            $imagepath = $directory . DIRECTORY_SEPARATOR . $filename;
+            $uploadedFile->moveTo($imagepath);
 
-            // - change filename from 'xxxx.ext' to <guess_id>.ext
-            // - move file into $directory folder (see below)
-            $file = $files["guessimage"];
-            $ext = explode("/", $file->getClientMediaType())[1];
-            $filePath = $directory.$guessId.".".$ext;
-            $file->moveTo($filePath);
-
-            //call node api for prediction :
-            //- use GuzzleHttp\Client class : https://odan.github.io/slim4-skeleton/http-client.html / https://docs.guzzlephp.org/en/stable/psr7.html#requests
-            //- node js api url : 'http://node:3000/api/' 
-            //- upload file into a multipart body parameter
-            //- store nodejs api response into $response2
-            $client = new GuzzleHttp\Client([
-                // Base URI is used with relative requests
-                'base_uri' => 'http://node:3000/api/'
-            ]);
-
+            //call node api for prediction
+            $client = new GuzzleHttp\Client(['base_uri' => 'http://node:3000/api/']);
             $response2 = $client->request('POST', 'guesses', [
                 'multipart' => [
                     [
                         'name'     => 'guessimage',
-                        'contents' => Psr7\Utils::tryFopen($filePath, 'r')
+                        'contents' => Psr7\Utils::tryFopen($imagepath, 'r')
                     ]
                 ]
             ]);
-
-            $requestStatus = $response2->getStatusCode();
-            //check $response2 status code == 201 or 200
-            if ($requestStatus == 201 || $requestStatus == 200)
+            if ($response2->getStatusCode()==201 || $response2->getStatusCode()==200)
             {
-                //PROCESS IA ANSWER : 
-                //- decode ia answer (use json_decode php function)
-                $answer = json_decode($response2->getBody()->getContents(), true)["guess"];
-
-                //- store answer in database (use DBConnection - see tests route in index.php) into table 'guesses' (check already created table 'guesses' in the database)
-                //- catch PDO exception and if error, return suitable json response with status 500 
+                $ia_answer = json_decode($response2->getBody());
+                $guess = $ia_answer->{"guess"};
                 try {
-                    //connect to DB
+
+                    /* insert into db */
+                    $sql = "INSERT INTO guesses (`id`, `imagepath`, `guess`) VALUES(:id, :imagepath, :guess )";
+                    //connect to DB and exec query
                     $dbconn = new DB\DBConnection();
-                    $db = $dbconn->connect();
-                        
-                    $stmt = $db->prepare( "INSERT INTO guesses (id, imagepath, guess) VALUES (:id, :imagepath, :guess)");
-                    $stmt->bindParam("id", $guessId);
-                    $stmt->bindParam("imagepath", $filePath);
-                    $stmt->bindParam("guess", $answer);
-
-                    // query
+                    $db = $dbconn->connect();    
+                    $stmt = $db->prepare( $sql );
+                    $stmt->bindParam(':id', $id);  
+                    $stmt->bindParam(':imagepath', $imagepath );
+                    $stmt->bindParam(':guess', $guess );
+                    // execute insert sql
                     $stmt->execute();
-
-                    //return suitable json response with status 201 (CREATED)
-                    $response->getBody()->write(json_encode([
-                        "id" => $guessId,
-                        "date" => $date,
-                        "imagepath" => $filePath,
-                        "guess" => $answer,
-                    ]));
-                    return $response->withStatus(201);
-                }
-                catch(PDOException $e) {
-                    $response->getBody()->write($e->getMessage());
-                    return $response->withStatus(500);
+                    //close connection
+                    $db = null;
+                } catch( PDOException $e ) {
+                    // response : 500 : PDO Error (DB)
+                    $response->getBody()->write('{"success": false , "message": "' . $e->getMessage() . '"}');
+                    return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+        
                 }
 
+
+                $responsebody = array("id" => $id, "date" => $date, "imagepath" => $imagepath, "guess" => $guess);
+
+                $response->getBody()->write(json_encode($responsebody));
+                return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
             }
             else{
-                //return suitable json response with status 500 
-                $response->getBody()->write('{
-                    "success": false,
-                    "message": "Internal server error"
-                }');
-                return $response->withStatus(500);
+                $ia_answer = json_decode($response2->getBody());
+                $error = $ia_answer->{"error"};
+
+                $response->getBody()->write('{"success": false , "message": "unable to predict from node image : '.$error . '"}');
+                return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
             }
 
         }
         else{
-            //return suitable json response with status 415 (unsupported Media Type) 
-            $response->getBody()->write('{
-                "success": false,
-                "message": "Unsupported Media Type : Image must be \'jpg / jpeg / png\'"
-            }');
-            return $response->withStatus(415);
+            $response->getBody()->write('{"success": false , "message": "Unsupported Media Type : Image must be \'jpg / jpeg / png\'"}');
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(415);
         }
         
     }
     else{
-        //return suitable json response with status 400 (Bad Request)
-        $response->getBody()->write('{
-            "success": false,
-            "message": "Bad Request : Missing \'guessimage\' formdata field
-        }');
-        return $response->withStatus(400);
+        $response->getBody()->write('{"success": false , "message": "Bad Request : Missing \'guessimage\' formdata field"}');
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
     }
+
+    
+    return $response;
 });
 
 
 
 
 
-/**
- * Put Guess Feedback (if AI Win or Not)
-**/
+/* Put Guess Feedback (if AI Win or Not)*/
 $app->put('/api/guesses/{guessid}', function (Request $request, Response $response) {
     // retrieve path param : guessid
-    /*TODO*/
+    $guessid = $request->getAttribute('guessid');
 
-    //connect to DB and check guess already exists or not (by guessid)
-    /*TODO*/
+    //prepar query to check if guess already done
+    $sql = "select * from guesses where id = :guessid";
 
-    //If guesse not exist ==> return suitable json response with status code 404 (not found)
-    //Else : 
-    //- retrieve the body parameter 'win' if exists (else return suitable json response with code 400)
-    //- update the row in table 'guesses' in DB
-    //- return suitable json answer counting total feedbacked guesses and  number of winned guesses - with the code 200
-    //- catch PDO exception and if error,  return suitable json response with status 500 
-    /*TODO*/
+    //connect to DB
+    $dbconn = new DB\DBConnection();
+    $db = $dbconn->connect();    
+    $stmt = $db->prepare( $sql );
+    $stmt->bindParam(':guessid', $guessid);
+
+    // query
+    $stmt->execute();
+    $guesses = $stmt->fetch( PDO::FETCH_OBJ );
+
+    if (!$guesses){
+        $db = null; // clear db object
+
+        // if guess not already exists : Response : 404 : Not Found
+        $response->getBody()->write('{"success": false , "message" : "Guess n° ' . $guessid . ' not found !"}');
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
+    }
+    else{
+        //check not required params 
+        $reqbody = json_decode($request->getBody(), true);
+        if (array_key_exists("win", $reqbody))
+        {
+            try {
+                //update
+                $sql = "UPDATE guesses SET `win` = :win WHERE id = :guessid";
+
+                $stmt = $db->prepare( $sql );
+                $stmt->bindParam(':win', $reqbody["win"]);  
+                $stmt->bindParam(':guessid', $guessid);
+            
+                // execute update sql
+                $stmt->execute();
+
+                //get global scores
+                $sql = "SELECT count(*) FROM guesses WHERE win <> 0 and win IS NOT NULL";
+                $res = $db->query($sql);
+                $totalguesses = $res->fetchColumn();
+
+                $sql = "SELECT count(*) FROM guesses WHERE win > 0 and win IS NOT NULL";
+                $res = $db->query($sql);
+                $totalwins = $res->fetchColumn();
+
+                //close connection
+                $db=null;
+
+                $responsebody = array("total" => $totalguesses, "win" => $totalwins);
+
+                $response->getBody()->write(json_encode($responsebody));
+                return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+
+            } catch( PDOException $e ) {
+                // response : 500 : PDO Error (DB)
+                $response->getBody()->write('{"success": false , "message": "' . $e->getMessage() . '"}');
+                return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
     
+            }
+        }
+        else{
+            $response->getBody()->write('{"success": false , "message": "Bad Request : Missing \'win\' json field"}');
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+        }
+    }
+
+
+    
+
+    
+
     
     return $response;
 });

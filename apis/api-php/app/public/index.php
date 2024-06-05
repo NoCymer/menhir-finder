@@ -8,6 +8,8 @@ use DI\ContainerBuilder;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
 
+
+
 require __DIR__ . '/../vendor/autoload.php';
 
 require_once __DIR__ . '/../db/DBConnection.php';
@@ -97,6 +99,7 @@ require __DIR__ . '/../apiroutes/auth.php';
 
 # include Guesses routes
 require __DIR__ . '/../apiroutes/public_guesses.php';
+
 
 $app->options('/{routes:.+}', function ($request, $response, $args) {
   return $response;

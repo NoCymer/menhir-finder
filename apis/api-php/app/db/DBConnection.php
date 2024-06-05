@@ -26,7 +26,7 @@ class DBConnection {
     public function connect() {
 
         $prepare_conn_str = "mysql:host=$this->dbhost;dbname=$this->dbname";
-        $dbConn = new PDO( $prepare_conn_str, $this->dbuser, $this->dbpass );
+        $dbConn = new \PDO( $prepare_conn_str, $this->dbuser, $this->dbpass );
 
         // https://www.php.net/manual/en/pdo.setattribute.php
         $dbConn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );

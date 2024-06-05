@@ -36,11 +36,6 @@ class JwtHandler {
      * Method to encode the token using : 
      *   - $iss : issuer string
      *   - $data : data array that you want to encode in the token
-     * 
-     * ex : _jwt_encode_data(
-     *           'Toutatix.iutsd', //issuer (just put a uniq string like this)
-     *           array("username"=>$username, "admin"=>$idadmin) // create an array if all needed user infos ==> PAYLOAD 
-     *       );
      */ 
     public function _jwt_encode_data($iss,$data){
 
