@@ -6,7 +6,7 @@ import { Component, Input } from "@angular/core";
     styleUrl: './login-card.component.scss',
     standalone: true,
 })
-    export class NavComponent {
-    @Input() src="";
+export class NavComponent {
+    
 }
   
