@@ -14,12 +14,21 @@ export class AuthService{
         this.loadCachedToken();
     }
 
+    /**
+     * Tries to retrieve a token from the local storage if it exists and if its still valid
+     * @returns 
+     */
     private loadCachedToken() {
         let token = localStorage.getItem("token") ?? undefined;
         if(!token) return;
         if(this.validateTokenExpDate(token)) this.token = token;
     }
 
+    /**
+     * Checks if the given token has not expired
+     * @param token 
+     * @returns true if valid
+     */
     private validateTokenExpDate(token: string): boolean {
         let decoded = jwtDecode(token);
         if(decoded.exp && decoded.exp > (new Date().getTime() / 1000)) return true;
