@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { RouterOutlet, RouterModule, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/Auth.service';
 
 @Component({
   selector: 'main-header',
@@ -9,9 +10,14 @@ import { RouterOutlet, RouterModule, Router } from '@angular/router';
 })
 export class MainHeaderComponent {
   constructor(
-    public router: Router
+    public router: Router,
+    public authService: AuthService
   ) {}
   @Input() src="";
+
+  public deauth() {
+    this.authService.deauthenticate();
+  }
 }
 
 

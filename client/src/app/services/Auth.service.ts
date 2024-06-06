@@ -2,14 +2,37 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular
 import { Injectable } from "@angular/core";
 import { environment } from "../../environements";
 import { AuthDto } from "../dtos/AuthDto";
+import { jwtDecode } from "jwt-decode";
 
 @Injectable({providedIn: "root"})
 export class AuthService{
-    private token?: string = undefined;
+    private token?: string;
 
     constructor(
         private http: HttpClient
-    ) {}
+    ) {
+        this.loadCachedToken();
+    }
+
+    private loadCachedToken() {
+        let token = localStorage.getItem("token") ?? undefined;
+        if(!token) return;
+        if(this.validateTokenExpDate(token)) this.token = token;
+    }
+
+    private validateTokenExpDate(token: string): boolean {
+        let decoded = jwtDecode(token);
+        if(decoded.exp && decoded.exp > (new Date().getTime() / 1000)) return true;
+        return false;
+    }
+
+    /**
+     * Logs out the connected user
+     */
+    public deauthenticate() {
+        this.token = undefined;
+        localStorage.setItem("token", "");
+    }
 
     /**
      * Authenticates a user by its login and password
@@ -32,13 +55,14 @@ export class AuthService{
         .subscribe({
             next: (data: AuthDto) => {
                 this.token = data.token;
+                localStorage.setItem("token", this.token);
             },
             error: (error) => {
                 if(!(error instanceof HttpErrorResponse)) return;
                 switch(error.status) {
                     // Invalid credentials
                     case 401:
-                        console.error("invalid creds");
+                        console.error("[ERROR] : Invalid credentials");
                         break;
                     // Unexpected error
                     default:
