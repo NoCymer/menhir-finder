@@ -1,8 +1,13 @@
 # Image de base sur DockerHub
-FROM php:8.0-apache
+FROM php:8.1-apache
 
 # Ajout du module de rewriting d'Apache
 RUN a2enmod rewrite 
+
+RUN apt-get update && apt-get upgrade -y && apt-get install -y nano
+RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli \
+    && a2enmod headers \
+    && sed -ri -e 's/^([ \t]*)(<\/VirtualHost>)/\1\tHeader set Access-Control-Allow-Origin "*"\n\1\2/g' /etc/apache2/sites-available/*.conf
 
 # Mise à jour du gestionnaire de paquets apt-get et installation de zip / unzip
 RUN apt-get update && apt-get install -y unzip zip

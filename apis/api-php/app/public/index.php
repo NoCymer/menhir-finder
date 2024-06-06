@@ -25,9 +25,27 @@ AppFactory::setContainer($container);
 
 //create
 $app = AppFactory::create();
- 
+
+$app->add(function (Request $request, $handler) {
+  $response = $handler->handle($request);
+  return $response->withHeader('Access-Control-Allow-Origin', '*')
+                  ->withHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Origin, Accept')
+                  ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+                  ->withHeader('Access-Control-Allow-Credentials', 'true');
+});
+
+// Route to handle OPTIONS preflight requests
+$app->options('/{routes:.+}', function (Request $request, Response $response, $args) {
+  return $response->withHeader('Access-Control-Allow-Origin', '*')
+                  ->withHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Origin, Accept')
+                  ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+                  ->withHeader('Access-Control-Allow-Credentials', 'true')
+                  ->withStatus(204);
+});
+
+
 $app->get('/', function (Request $request, Response $response, $args) {
-  $response->getBody()->write("Welcome in Toutatix !");
+  $response->getBody()->write("Welcome in Toutatixe !");
   return $response;
 });
 
@@ -99,19 +117,6 @@ require __DIR__ . '/../apiroutes/auth.php';
 
 # include Guesses routes
 require __DIR__ . '/../apiroutes/public_guesses.php';
-
-
-$app->options('/{routes:.+}', function ($request, $response, $args) {
-  return $response;
-});
-
-$app->add(function ($request, $handler) {
-  $response = $handler->handle($request);
-  return $response
-          ->withHeader('Access-Control-Allow-Origin', '*')
-          ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-          ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-});
 
 /**
  * Catch-all route to serve a 404 Not Found page if none of the routes match

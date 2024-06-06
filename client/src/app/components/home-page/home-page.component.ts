@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChildren } from "@angular/core";
-import { GuessService } from "../../services/GuessService.service";
+import { GuessService } from "../../services/Guess.service";
 import { CardComponent } from "../card/primary-card/primary-card.component";
 import { Card2Component } from "../card/secondary-card/secondary-card.component";
 import { NavbarMobileComponent } from "../navbar-mobile/navbar-mobile.component";

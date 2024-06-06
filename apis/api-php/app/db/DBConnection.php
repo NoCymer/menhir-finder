@@ -16,7 +16,7 @@ class DBConnection {
 
     public function __construct()
     {
-        $this->dbhost = 'db_server';
+        $this->dbhost = 'db';
         $this->dbuser = getenv("MYSQL_USER");
         $this->dbpass = getenv("MYSQL_PASSWORD");
         $this->dbname = getenv("MYSQL_DATABASE");
