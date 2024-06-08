@@ -1,5 +1,12 @@
 .bg-card{
     background-color: #2F3233;
-    box-shadow: 0px 1px 10px gray;
+    box-shadow: 0px 1px 15px #4b4b4b88;
+}
 
+.hover-animation{
+    border: 1px solid #00000000;
+    transition: border 250ms;
+    &:hover{
+        border: 1px solid rgb(191 219 254);
+    }
 }

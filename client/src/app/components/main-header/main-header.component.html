@@ -1,20 +1,22 @@
-<div class="flex items-center w-full p-4">
-    <img src="../assets/img/logo.png" alt="Logo" class="w-16 h-auto">
-    <div class="flex-1 flex justify-center">
-        <nav class="desktop-navbar hidden md:flex">
-            <ul class="flex space-x-8 text-white text-xl font-bold">
-                <li><a href="#" class="text-white">Accueil</a></li>
-                <li><a href="#" class="text-white">Historique</a></li>
-                <li><a href="#" class="text-white">Statistiques</a></li>
-            </ul>
-        </nav>
+<div class="flex justify-between items-center w-full p-4">
+    <div class="flex-1 flex justify-start">
+        <img src="../assets/img/logo.png" alt="Logo" class="w-16 h-auto object-contain">
     </div>
-    @if(!authService.isLogged)
-    {
-        <button class="border-2 border-white text-white py-1 px-4 rounded-full ms-auto" (click)='router.navigate(["login"])'>Connexion</button>
-    }
-    @else
-    {
-        <button class="border-2 border-white text-white py-1 px-4 rounded-full ms-auto" (click)='this.deauth()'>Se déconnecter</button>
-    }
+    <nav class="hidden md:flex justify-center flex-1">
+        <ul class="flex space-x-8 text-white text-xl font-bold">
+            <li><a href="#" class="text-white underline-animation">Accueil</a></li>
+            <li><a href="#" class="text-white underline-animation">Historique</a></li>
+            <li><a href="#" class="text-white underline-animation">Statistiques</a></li>
+        </ul>
+    </nav>
+    <div class="flex-1 flex justify-end">
+        @if(!authService.isLogged)
+        {
+            <button class="border-2 border-white text-white py-1 px-4 rounded-full hover:border-blue-200 hover:text-blue-200 transition-all" (click)='router.navigate(["login"])'>Connexion</button>
+        }
+        @else
+        {
+            <button class="border-2 border-white text-white py-1 px-4 rounded-full hover:border-blue-200 hover:text-blue-200 transition-all" (click)='this.deauth()'>Se déconnecter</button>
+        }
+    </div>
 </div>
