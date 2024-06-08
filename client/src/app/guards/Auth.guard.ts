@@ -8,7 +8,7 @@ export const isAuthentified: CanActivateFn = (
 ) => {
     const authService: AuthService = inject(AuthService);
     const router: Router = inject(Router);
-    let isLogged = authService.isLogged();
+    let isLogged = authService.isLogged;
     return isLogged ? true : router.createUrlTree(["/"]);
 }
 
@@ -18,7 +18,7 @@ export const isNotAuthentified: CanActivateFn = (
 ) => {
     const authService: AuthService = inject(AuthService);
     const router: Router = inject(Router);
-    let isLogged = authService.isLogged();
+    let isLogged = authService.isLogged;
     return !isLogged ? true : router.createUrlTree(["/"]);
 }
 

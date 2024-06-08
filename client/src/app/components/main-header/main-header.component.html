@@ -9,7 +9,7 @@
             </ul>
         </nav>
     </div>
-    @if(!authService.isLogged())
+    @if(!authService.isLogged)
     {
         <button class="border-2 border-white text-white py-1 px-4 rounded-full ms-auto" (click)='router.navigate(["login"])'>Connexion</button>
     }

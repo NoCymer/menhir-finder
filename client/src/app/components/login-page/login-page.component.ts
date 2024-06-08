@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { AuthService } from "../../services/Auth.service";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'login-page',
@@ -10,12 +11,20 @@ import { AuthService } from "../../services/Auth.service";
 })
 export class LoginPage {
     constructor(
-        private authService: AuthService
+        private authService: AuthService,
+        private router: Router
     ) {
-        authService.authenticate(
+        this.login();
+    }
+
+    public login() {
+        this.authService.authenticate(
             "asterix@irreductibles.fr",
             "Le Plus Rapide & Intelligent"
-        );
+        ).subscribe(res => {
+            if(res) this.router.navigate(["/"]);
+            else return;
+        });
     }
 }
   

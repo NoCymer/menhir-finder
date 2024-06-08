@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { environment } from "../../environements";
 import { AuthDto } from "../dtos/AuthDto";
 import { jwtDecode } from "jwt-decode";
+import { Observable, Observer } from "rxjs";
 
 @Injectable({providedIn: "root"})
 export class AuthService{
@@ -48,45 +49,49 @@ export class AuthService{
      * @param login 
      * @param password 
      */
-    public authenticate(login: string, password: string) {
-        let options = {
-            headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-        };
-        const body = new HttpParams()
-          .set('email', login)
-          .set('pass', password);
-        
-        this.http.post<AuthDto>(
-            environment.apiUrl + "login",
-            body.toString(),
-            options
-        )
-        .subscribe({
-            next: (data: AuthDto) => {
-                this.token = data.token;
-                localStorage.setItem("token", this.token);
-            },
-            error: (error) => {
-                if(!(error instanceof HttpErrorResponse)) return;
-                switch(error.status) {
-                    // Invalid credentials
-                    case 401:
-                        console.error("[ERROR] : Invalid credentials");
-                        break;
-                    // Unexpected error
-                    default:
-                        console.error(error.message);
-                        break;
+    public authenticate(login: string, password: string): Observable<boolean> {
+        return new Observable((observer: Observer<boolean>) => {
+            let options = {
+                headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+            };
+            const body = new HttpParams()
+              .set('email', login)
+              .set('pass', password);
+    
+            this.http.post<AuthDto>(
+                environment.apiUrl + "login",
+                body.toString(),
+                options
+            )
+            .subscribe({
+                next: (data: AuthDto) => {
+                    this.token = data.token;
+                    localStorage.setItem("token", this.token);
+                    observer.next(true);
+                },
+                error: (error) => {
+                    if(!(error instanceof HttpErrorResponse)) return;
+                    switch(error.status) {
+                        // Invalid credentials
+                        case 401:
+                            console.error("[ERROR] : Invalid credentials");
+                            break;
+                        // Unexpected error
+                        default:
+                            console.error(error.message);
+                            break;
+                    }
+                    observer.next(false);
                 }
-            }
-        })
+            });
+        });
     }
 
     /**
      * 
      * @returns Whether or not the user is logged in
      */
-    public isLogged(): boolean {
+    public get isLogged(): boolean {
         return this.token != undefined;
     }
 

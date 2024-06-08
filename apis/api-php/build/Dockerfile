@@ -5,9 +5,9 @@ FROM php:8.1-apache
 RUN a2enmod rewrite 
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y nano
-RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli \
-    && a2enmod headers \
-    && sed -ri -e 's/^([ \t]*)(<\/VirtualHost>)/\1\tHeader set Access-Control-Allow-Origin "*"\n\1\2/g' /etc/apache2/sites-available/*.conf
+
+# Necessary for CORS Config
+RUN a2enmod headers
 
 # Mise à jour du gestionnaire de paquets apt-get et installation de zip / unzip
 RUN apt-get update && apt-get install -y unzip zip
