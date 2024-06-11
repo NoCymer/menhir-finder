@@ -1,19 +1,30 @@
 import { Component, Input } from "@angular/core";
-import { CardComponent } from "../card/primary-card/primary-card.component";
-import { Card2Component } from "../card/secondary-card/secondary-card.component";
-import { NavbarMobileComponent } from "../navbar-mobile/navbar-mobile.component";
-import { MainHeaderComponent } from "../main-header/main-header.component";
-import { NavComponent } from "./login-card/login-card.component";
-import { MatIcon } from "@angular/material/icon";
+import { AuthService } from "../../services/Auth.service";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'login-page',
     templateUrl: './login-page.component.html',
     styleUrl: './login-page.component.scss',
-    imports:  [CardComponent, Card2Component, NavbarMobileComponent, MainHeaderComponent, NavComponent, MatIcon],
+    providers: [AuthService],
     standalone: true,
 })
 export class LoginPage {
-    
+    constructor(
+        private authService: AuthService,
+        private router: Router
+    ) {
+        this.login();
+    }
+
+    public login() {
+        this.authService.authenticate(
+            "asterix@irreductibles.fr",
+            "Le Plus Rapide & Intelligent"
+        ).subscribe(res => {
+            if(res) this.router.navigate(["/"]);
+            else return;
+        });
+    }
 }
   

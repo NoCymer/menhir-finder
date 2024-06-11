@@ -1,8 +1,13 @@
 # Image de base sur DockerHub
-FROM php:8.0-apache
+FROM php:8.1-apache
 
 # Ajout du module de rewriting d'Apache
 RUN a2enmod rewrite 
+
+RUN apt-get update && apt-get upgrade -y && apt-get install -y nano
+
+# Necessary for CORS Config
+RUN a2enmod headers
 
 # Mise à jour du gestionnaire de paquets apt-get et installation de zip / unzip
 RUN apt-get update && apt-get install -y unzip zip
