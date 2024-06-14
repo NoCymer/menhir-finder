@@ -1,0 +1,18 @@
+<div class="flex justify-center items-center h-screen">
+  <div class="flex flex-col items-center">
+    <div class="relative">
+      <div class="w-96 h-96 rounded-lg shadow-md bg-card relative">
+        <video #videoElement class="absolute inset-0 w-full h-full object-cover rounded-lg"></video>
+      </div>
+      <div class="flex mt-4">
+        <button (click)="takePhoto()" class="bg-white rounded-full p-4 shadow-md mr-4">
+          Capturer
+        </button>
+        <input type="file" accept="image/*" (change)="importPhoto($event)" id="photoInput" style="display: none;">
+        <label for="photoInput" class="bg-white rounded-full p-4 shadow-md cursor-pointer">
+          Importer
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
