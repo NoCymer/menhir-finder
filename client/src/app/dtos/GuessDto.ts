@@ -6,3 +6,8 @@ export interface GuessDto {
     imagepath: string,
     guess: string
 }
+
+export interface GuessDtoHistory{
+    guess: GuessDto,
+    image: File,
+}

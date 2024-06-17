@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
   selector: 'primary-card',
   templateUrl: './primary-card.component.html',
   styleUrl: './primary-card.component.scss',
+  providers: [Router],
   standalone: true,
 })
 export class PrimaryCardComponent {

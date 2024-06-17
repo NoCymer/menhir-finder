@@ -1,11 +1,13 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { GuessDto } from "../dtos/GuessDto";
+import { GuessDto, GuessDtoHistory } from "../dtos/GuessDto";
 import { environment } from "../../environements";
 import { Router } from "@angular/router";
 
 @Injectable({providedIn: "root"})
 export class GuessService{
+    private _latestResult: GuessDtoHistory | undefined;
+
     constructor(
         private http: HttpClient,
         private router: Router
@@ -31,7 +33,11 @@ export class GuessService{
         )
         .subscribe({
             next: (data: GuessDto) => {
-                console.table(data)
+                this._latestResult = {
+                    guess: data,
+                    image: file
+                };
+                this.router.navigate(["/result"]);
             },
             error: (error) => {
                 if(!(error instanceof HttpErrorResponse)) return;
@@ -43,5 +49,21 @@ export class GuessService{
                 }
             }
         });
+    }
+
+    public valid() {
+
+    }
+
+    public invalid() {
+
+    }
+
+    public unaccountable() {
+        
+    }
+
+    public get latestResult() {
+        return this._latestResult;
     }
 }

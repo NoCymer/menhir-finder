@@ -8,7 +8,7 @@ import { GuessService } from '../../services/Guess.service';
   selector: 'navbar-mobile',
   templateUrl: './navbar-mobile.component.html',
   imports: [MatIcon],
-  providers: [DeviceService, GuessService],
+  providers: [Router],
   styleUrl: './navbar-mobile.component.scss',
   standalone: true,
 })

@@ -1,18 +1,18 @@
 <div class="flex justify-between items-center w-full p-4">
     <div class="flex-1 flex justify-start">
-        <img src="../assets/img/logo.png" alt="Logo" class="w-16 h-auto object-contain">
+        <img src="../assets/img/logo.png" alt="Logo" class="w-16 h-auto object-contain cursor-pointer" (click)='this.router.navigate(["/"])'>
     </div>
     <nav class="hidden md:flex justify-center flex-1">
         <ul class="flex space-x-8 text-white text-xl font-bold">
-            <li><a href="#" class="text-white underline-animation">Accueil</a></li>
-            <li><a href="#" class="text-white underline-animation">Historique</a></li>
-            <li><a href="#" class="text-white underline-animation">Statistiques</a></li>
+            <li><a (click)="this.router.navigate(['/'])" class="text-white underline-animation cursor-pointer">Accueil</a></li>
+            <li><a (click)="this.router.navigate(['history'])" class="text-white underline-animation cursor-pointer">Historique</a></li>
+            <li><a (click)="this.router.navigate(['statistics'])" class="text-white underline-animation cursor-pointer">Statistiques</a></li>
         </ul>
     </nav>
     <div class="flex-1 flex justify-end">
         @if(!authService.isLogged)
         {
-            <button class="border-2 border-white text-white py-1 px-4 rounded-full hover:border-blue-200 hover:text-blue-200 transition-all" (click)='router.navigate(["login"])'>Connexion</button>
+            <button class="border-2 border-white text-white py-1 px-4 rounded-full hover:border-blue-200 hover:text-blue-200 transition-all" (click)='router.navigate(["/login"])'>Connexion</button>
         }
         @else
         {

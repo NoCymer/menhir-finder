@@ -4,8 +4,8 @@
 
 <div class="flex flex-col items-center justify-center p-4 font-poppins">
     <div class="flex justify-between w-full max-w-md mt-4 space-x-4 mx-2">
-        <secondary-card src="../assets/img/img_card2.png" title="Statistiques" class="w-1/2"></secondary-card>
-        <secondary-card src="../assets/img/img_card3.png" title="Historique" class="w-1/2"></secondary-card>
+        <secondary-card src="../assets/img/img_card2.png" title="Statistiques" class="w-1/2" (click)='this.router.navigate(["/statistics"])'></secondary-card>
+        <secondary-card src="../assets/img/img_card3.png" title="Historique" class="w-1/2" (click)='this.router.navigate(["/history"])'></secondary-card>
     </div>
 </div>          
 

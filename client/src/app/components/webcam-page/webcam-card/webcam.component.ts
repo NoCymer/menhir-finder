@@ -5,7 +5,6 @@ import { GuessService } from '../../../services/Guess.service';
   selector: 'app-webcam',
   templateUrl: './webcam.component.html',
   styleUrls: ['./webcam.component.scss'],
-  providers: [GuessService],
   standalone: true
 })
 export class WebcamComponent implements OnInit {
@@ -71,7 +70,6 @@ export class WebcamComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.capturedImage = e.target.result;
-        this.stopWebcam();
         this.showScanButton = true; // Afficher le bouton scan
       };
       reader.readAsDataURL(file);

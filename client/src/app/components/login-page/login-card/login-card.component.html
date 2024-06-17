@@ -1,49 +1,43 @@
-<div class="flex flex-col items-center justify-center p-4 font-poppins min-h-screen">
+<div class="flex flex-col items-center justify-center p-4 pt-10">
   <div class="w-full max-w-md bg-card rounded-lg shadow-md">
-    <div class="flex items-center justify-center mb-3 pt-3">
+    <div class="flex items-center justify-center mb-3 pt-10">
     <span class="rounded-full p-2 flex justify-center items-center">
       <mat-icon class="login-icon text-white">person</mat-icon>
     </span>
   </div>
-    <h1 class="text-white text-center text-2xl mb-2 pt-2">Se connecter</h1>
-    <div class="px-8 pb-8">
-      <div class="mb-4 flex items-center border border-white rounded-md">
-        <span class="px-3 py-2 bg-transparent border-r border-gray-600 text-gray-400">
-          <mat-icon>mail</mat-icon>
-        </span>
-        <input
-          type="email"
-          id="UserEmail"
-          placeholder="Email"
-          class="w-full bg-transparent text-white placeholder-gray-400 focus:outline-none py-2 px-3"
-          aria-label="Email"
-        />
-      </div>
-      <div class="mb-6 flex items-center border border-white rounded-md">
-        <span class="px-3 py-2 bg-transparent border-r border-gray-600 text-gray-400">
-          <mat-icon>lock</mat-icon>
-        </span>
-        <input
-          type="password"
-          id="UserPassword"
-          placeholder="Mot de passe"
-          class="w-full bg-transparent text-white placeholder-gray-400 focus:outline-none py-2 px-3"
-          aria-label="Mot de passe"
-        />
-      </div>
-      <div class="flex justify-center mb-6">
-        <div class="flex items-center">
-          <input
-            type="checkbox"
-            id="rememberMe"
-            class="h-4 w-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
-          />
-          <label for="rememberMe" class="ml-2 block text-sm text-gray-400">Se souvenir de moi</label>
-        </div>
-      </div>
-      <div class="mt-4 flex justify-center">
-        <button class="bg-blue-200 text-black py-2 px-4 rounded w-full hover:bg-blue-300 transition-all">CONNEXION</button>
-      </div>
+  <h1 class="text-white text-center text-2xl mb-2 py-3">Se connecter</h1>
+  <div class="px-8 pb-8">
+    <div class="flex items-center border border-white rounded-md mb-6 mt-7">
+      <span class="px-3 py-2 bg-transparent border-r border-gray-600 text-gray-400 flex justify-center items-center">
+        <mat-icon>mail</mat-icon>
+      </span>
+      <input
+        type="email"
+        id="UserEmail"
+        placeholder="Email"
+        class="w-full bg-transparent text-white placeholder-gray-400 focus:outline-none py-2 px-3"
+        aria-label="Email"
+        ngModel
+        #email
+      />
     </div>
+    <div class="mb-6 flex items-center border border-white rounded-md">
+      <span class="px-3 py-2 bg-transparent border-r border-gray-600 text-gray-400 flex justify-center items-center">
+        <mat-icon>lock</mat-icon>
+      </span>
+      <input
+        type="password"
+        id="UserPassword"
+        placeholder="Mot de passe"
+        class="w-full bg-transparent text-white placeholder-gray-400 focus:outline-none py-2 px-3"
+        aria-label="Mot de passe"
+        ngModel
+        #password
+      />
+    </div>
+    <div class="mt-4 flex justify-center py-5">
+      <button class="bg-blue-200 text-black py-2 px-4 rounded w-full hover:bg-blue-300 transition-all" (click)="login()">CONNEXION</button>
+    </div>
+  </div>
   </div>
 </div>

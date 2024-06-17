@@ -6,7 +6,7 @@ import { AuthService } from '../../services/Auth.service';
   selector: 'main-header',
   templateUrl: './main-header.component.html',
   styleUrl: './main-header.component.scss',
-  providers: [AuthService],
+  providers: [Router],
   standalone: true,
 })
 export class MainHeaderComponent {
