@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'primary-card',
@@ -7,5 +8,8 @@ import { Component, Input } from '@angular/core';
   standalone: true,
 })
 export class PrimaryCardComponent {
+  constructor(
+    public router: Router
+  ){}
   @Input() src="";
 }

@@ -1,0 +1,22 @@
+<div class="flex flex-col items-center justify-center p-4 font-poppins">
+  <div class="flex flex-col items-center">
+    <div class="relative">
+      <div class="w-96 h-96 rounded-lg shadow-md bg-card relative">
+        <video *ngIf="!capturedImage" #videoElement class="absolute inset-0 w-full h-full object-cover rounded-lg"></video>
+        <img *ngIf="capturedImage" [src]="capturedImage" class="absolute inset-0 w-full h-full object-cover rounded-lg">
+      </div>
+      <div class="flex mt-4" *ngIf="!showScanButton">
+        <button (click)="takePhoto()" class="bg-white rounded-full p-4 shadow-md mr-4">
+          Capturer
+        </button>
+        <input type="file" accept="image/*" (change)="importPhoto($event)" id="photoInput" style="display: none;">
+        <label for="photoInput" class="bg-white rounded-full p-4 shadow-md cursor-pointer">
+          Importer
+        </label>
+      </div>
+      <button *ngIf="showScanButton" (click)="startScan()" class="bg-blue-500 text-white rounded-full p-4 shadow-md mt-4">
+        Lancez le scan
+      </button>
+    </div>
+  </div>
+</div>
