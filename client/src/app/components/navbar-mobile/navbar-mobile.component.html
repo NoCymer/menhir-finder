@@ -1,30 +1,29 @@
 <!-- Barre de navigation mobile qui se cache à partir d'une certaine dimension -->
-<nav class="bg-black w-full py-4 fixed bottom-0 md:hidden">
+<nav class="bg-black w-full fixed bottom-0 md:hidden">
     <ul>
         <li>
-            <a href="#" class="flex flex-col items-center">
+            <button (click)="router.navigate(['stats'])" class="flex flex-col items-center">
                 <mat-icon class="mat-18">monitoring</mat-icon>
-            </a>
-        </li>
-        <li>
-            <a href="#" class="flex flex-col items-center">
-                <mat-icon>photo_library</mat-icon>
-            </a>
+            </button>
         </li>
         <li class="relative">
-            <a href="#" class="camera-icon">
-                <mat-icon>photo_camera</mat-icon>
-            </a>
+            @if(isMobile) {
+                <input type="file" accept="image/*" class="camera-input" name="camera-input" id="camera-input" onclick="value = null" (change)="guessService.makeGuessFromInputEvent($event)">
+                <label class="camera-icon" for="camera-input">
+                    <mat-icon>photo_camera</mat-icon>
+                </label>
+            }
+
+            @else {
+                <button (click)="router.navigate(['scan'])" class="camera-icon">
+                    <mat-icon>photo_camera</mat-icon>
+                </button>
+            }
         </li>
         <li>
-            <a href="#" class="flex flex-col items-center">
-                <mat-icon>pie_chart</mat-icon>
-            </a>
-        </li>
-        <li>
-            <a href="#" class="flex flex-col items-center">
+            <button (click)="router.navigate(['account'])" class="flex flex-col items-center">
                 <mat-icon>account_circle</mat-icon>
-            </a>
+            </button>
         </li>
     </ul>
 </nav>

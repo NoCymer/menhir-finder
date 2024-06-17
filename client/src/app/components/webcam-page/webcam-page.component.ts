@@ -12,26 +12,15 @@ import { WebcamComponent } from "./webcam-card/webcam.component";
     selector: 'login-page',
     templateUrl: './webcam-page.component.html',
     styleUrl: './webcam-page.component.scss',
-    providers: [AuthService],
+    providers: [],
     imports: [MatIcon, NavbarMobileComponent, NavComponent, MainHeaderComponent, WebcamComponent],
     standalone: true,
 })
 export class WebcamPage {
     constructor(
-        private authService: AuthService,
         private router: Router
     ) {
-        this.login();
-    }
-
-    public login() {
-        this.authService.authenticate(
-            "asterix@irreductibles.fr",
-            "Le Plus Rapide & Intelligent"
-        ).subscribe(res => {
-            if(res) this.router.navigate(["/"]);
-            else return;
-        });
+        
     }
 }
   

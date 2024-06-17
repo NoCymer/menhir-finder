@@ -3,7 +3,13 @@
 @import 'tailwindcss/utilities';
 @import url('https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined');
 
+:root{
+    --navbar-height: 70px;
+}
 
 body{
     background-color: black;
+    min-height: 100lvh;
+    overflow-x: hidden;
+    padding-bottom: calc(70px * 1.5);
 }

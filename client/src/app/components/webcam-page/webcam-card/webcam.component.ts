@@ -1,19 +1,21 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { GuessService } from '../../../services/Guess.service';
 
 @Component({
   selector: 'app-webcam',
   templateUrl: './webcam.component.html',
   styleUrls: ['./webcam.component.scss'],
-  standalone: true,
-  imports: [CommonModule]
+  providers: [GuessService],
+  standalone: true
 })
 export class WebcamComponent implements OnInit {
   @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>;
   capturedImage: string | null = null;
   showScanButton: boolean = false; // Nouvelle propriété
 
-  constructor() { }
+  constructor(
+    public guessService: GuessService
+  ) {}
 
   ngOnInit(): void {
     this.startWebcam();
@@ -40,6 +42,24 @@ export class WebcamComponent implements OnInit {
     if (context) {
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
       this.capturedImage = canvas.toDataURL('image/png');
+
+      // convert to binary
+      var blobBin = atob(this.capturedImage.split(',')[1]);
+      var array = [];
+      for(var i = 0; i < blobBin.length; i++) {
+          array.push(blobBin.charCodeAt(i));
+      }
+      
+      this.guessService.makeGuessFromPicture(
+        new File(
+          [new Blob([new Uint8Array(array)])],
+          "upload.png",
+          {
+            type: 'image/png'
+          }
+        )
+      );
+      
       this.stopWebcam();
       this.showScanButton = true; // Afficher le bouton scan
     }
