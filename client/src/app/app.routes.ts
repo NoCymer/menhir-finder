@@ -6,12 +6,13 @@ import { WebcamPage } from './components/webcam-page/webcam-page.component';
 import { isDesktop } from './guards/Device.guard';
 import { ResultPage } from './components/result-page/result-page.component';
 import { isAwaitingFeedback } from './guards/Result.guard';
+import { HistoryPage } from './components/history-page/history-page.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginPage, canActivate: [isNotAuthentified]},
     { path: 'scan', component: WebcamPage, canActivate: [isDesktop]},
     { path: 'result', component: ResultPage, canActivate: [isAwaitingFeedback]},
-    { path: 'history', component: WebcamPage, canActivate: [isAuthentified]},
+    { path: 'history', component: HistoryPage, canActivate: [isAuthentified]},
     { path: 'statistics', component: WebcamPage, canActivate: [isAuthentified]},
     { path: '', component: HomePage },
 ];

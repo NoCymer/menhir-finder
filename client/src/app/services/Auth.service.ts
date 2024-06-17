@@ -103,3 +103,9 @@ export class AuthService{
         return this.token;
     }
 }
+
+export class InvalidTokenError extends Error {
+    constructor() {
+        super("The provided token is invalid or expired");
+    }
+}

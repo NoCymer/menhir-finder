@@ -1,0 +1,51 @@
+<main-header></main-header>
+
+<div class="flex flex-col items-center justify-center p-4 font-poppins">
+    <div class="flex justify-between w-full max-w-md mt-4 space-x-4 mx-2">
+        <div class="flex flex-col items-center justify-center p-4 font-poppins w-full">
+            <div class="w-full flex">
+                <h2 class="text-white w-full font-poppins font-black text-2xl">Historique</h2>
+                <mat-icon class="text-white cursor-pointer me-3" (click)="this.clearGuesses()">delete</mat-icon>
+            </div>
+            <div class="w-full max-w-md p-4 rounded-lg shadow-md mt-4 mx-2 bg-card">
+                <div class="flex justify-center flex-col my-5">
+                    @for (element of history; track element.id) {
+                        @if(element.win != undefined) {
+                            <div class="flex w-full items-center bg-neutral-900 p-4 my-3 rounded-xl">
+                                @switch (element.win){
+                                    @case (0) {
+                                        <img src="../../../assets/img/img_card3.png" class="h-14 w-14 object-contain" alt="Invalide">
+                                        <h1 class="text-blue-300 font-bold flex-1 text-center">Invalide</h1>
+                                    }
+                                    @case (1) {
+                                        @if(element.guess == "Asterix") {
+                                            <img src="../../../assets/img/asterix.png" class="h-14 w-14 object-contain" alt="Reussite">
+                                        }
+                                        @else {
+                                            <img src="../../../assets/img/obelix.png" class="h-14 w-14 object-contain" alt="Reussite">
+                                        }
+                                        <h1 class="text-green-300 font-bold flex-1 text-center">Reussite</h1>
+                                    }
+                                    @case (-1) {
+                                        @if(element.guess == "Asterix") {
+                                            <img src="../../../assets/img/obelix.png" class="h-14 w-14 object-contain" alt="Echec">
+                                        }
+                                        @else {
+                                            <img src="../../../assets/img/asterix.png" class="h-14 w-14 object-contain" alt="Echec">
+                                        }
+                                        <h1 class="text-red-300 font-bold flex-1 text-center">Echec</h1>
+                                    }
+                                }
+                            </div>
+                        }
+                    }
+                    @empty{
+                        <h1 class="text-white w-full text-center font-bold">Nothing here yet</h1>
+                    }
+                </div>
+            </div>
+          </div>
+    </div>
+</div>          
+
+<navbar-mobile></navbar-mobile>

@@ -39,7 +39,7 @@ $app->get('/api/guesses', function( Request $request, Response $response){
                 
             }
             $response->getBody()->write(json_encode($json));
-            return $response;
+            return $response->withHeader('Content-Type', 'application/json');
         } catch( PDOException $e ) {
             // response : 500 : PDO Error (DB)
             $response->getBody()->write('{"success": false, "message": "' . $e->getMessage() . '"}');

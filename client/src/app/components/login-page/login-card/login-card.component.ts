@@ -21,13 +21,8 @@ export class LoginCardComponent {
     ) { }
 
     public login() {
-        // this.authService.authenticate(
-        //     "asterix@irreductibles.fr",
-        //     "Le Plus Rapide & Intelligent"
-        // ).subscribe(res => {
-        //     if(res) this.router.navigate(["/"]);
-        //     else return;
-        // });
+        // asterix@irreductibles.fr
+        // Le Plus Rapide & Intelligent
         this.authService.authenticate(
             this.emailInput.nativeElement.value,
             this.passwordInput.nativeElement.value,
