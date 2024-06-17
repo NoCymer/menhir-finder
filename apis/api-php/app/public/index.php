@@ -8,6 +8,7 @@ use DI\ContainerBuilder;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
 
+error_reporting (E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -117,6 +118,9 @@ require __DIR__ . '/../apiroutes/auth.php';
 
 # include Guesses routes
 require __DIR__ . '/../apiroutes/public_guesses.php';
+
+# include Guesses routes
+require __DIR__ . '/../apiroutes/private_guesses.php';
 
 /**
  * Catch-all route to serve a 404 Not Found page if none of the routes match

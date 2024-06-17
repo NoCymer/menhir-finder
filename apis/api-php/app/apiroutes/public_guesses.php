@@ -102,14 +102,7 @@ $app->post('/api/guesses', function (Request $request, Response $response) {
         $response->getBody()->write('{"success": false , "message": "Bad Request : Missing \'guessimage\' formdata field"}');
         return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
     }
-
-    
-    return $response;
 });
-
-
-
-
 
 /* Put Guess Feedback (if AI Win or Not)*/
 $app->put('/api/guesses/{guessid}', function (Request $request, Response $response) {
@@ -181,12 +174,4 @@ $app->put('/api/guesses/{guessid}', function (Request $request, Response $respon
             return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
         }
     }
-
-
-    
-
-    
-
-    
-    return $response;
 });
