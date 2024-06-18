@@ -1,0 +1,20 @@
+<main-header></main-header>
+
+<div class="flex flex-col items-center justify-center p-4 font-poppins">
+    <div class="flex justify-between w-full max-w-md mt-4 space-x-4 mx-2">
+        <div class="flex flex-col items-center justify-center p-4 font-poppins w-full">
+            <div class="w-full flex">
+                <h2 class="text-white w-full font-poppins font-black text-2xl">Résultats</h2>
+            </div>
+            <div class="w-full max-w-md p-4 rounded-lg shadow-md mt-4 mx-2 bg-card">
+                <canvas class="p-1 w-full" #statsCanvas></canvas>
+            </div>
+            <div class="flex flex-col space-y-4 mt-5 w-full">
+                <button (click)="router.navigate(['scan'])" class="bg-blue-200 text-black py-2 px-4 rounded w-full hover:bg-blue-300 transition-all">Nouveau Scan</button>
+                <button (click)="router.navigate(['history'])" class="bg-blue-200 text-black py-2 px-4 rounded w-full hover:bg-blue-300 transition-all">Historique</button>
+            </div>
+          </div>
+    </div>
+</div>          
+
+<navbar-mobile></navbar-mobile>

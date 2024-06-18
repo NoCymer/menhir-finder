@@ -26,7 +26,7 @@ import { MatIcon } from "@angular/material/icon";
     ngOnInit(): void {
         this.guessService.history().subscribe({
             next: (data: HistoryDto[]) => {
-                this.history = data.reverse();
+                this.history = data.reverse().filter(a => a.win != undefined);
             },
             error: (error) => { }
         });

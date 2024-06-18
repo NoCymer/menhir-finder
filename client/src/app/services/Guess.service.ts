@@ -60,84 +60,99 @@ export class GuessService{
     /**
      * If the result is correct
      */
-    public valid() {
-        let options = {
-            headers: new HttpHeaders().set('Content-Type', 'application/json')
-        };
-        this.http.put<StatisticsDto>(
-            environment.apiUrl + "guesses/" + this._latestResult?.guess.id,
-            {
-                win: 1
-            },
-            options
-        )
-        .subscribe({
-            next: (data: StatisticsDto) => { this._latestStatistics = data },
-            error: (error) => {
-                if(!(error instanceof HttpErrorResponse)) return;
-                switch(error.status) {
-                    // Unexpected error
-                    default:
-                        console.error(error.message);
-                        break;
+    public valid(): Observable<boolean> {
+        return new Observable((observer: Observer<boolean>) => {
+            let options = {
+                headers: new HttpHeaders().set('Content-Type', 'application/json')
+            };
+            this.http.put<StatisticsDto>(
+                environment.apiUrl + "guesses/" + this._latestResult?.guess.id,
+                {
+                    win: 1
+                },
+                options
+            )
+            .subscribe({
+                next: (data: StatisticsDto) => {
+                    this._latestStatistics = data;
+                    observer.next(true);
+                },
+                error: (error) => {
+                    if(!(error instanceof HttpErrorResponse)) return;
+                    switch(error.status) {
+                        // Unexpected error
+                        default:
+                            console.error(error.message);
+                            break;
+                    }
                 }
-            }
+            });
         });
     }
 
     /**
      * If the result is wrong
      */
-    public invalid() {
-        let options = {
-            headers: new HttpHeaders().set('Content-Type', 'application/json')
-        };
-        this.http.put<StatisticsDto>(
-            environment.apiUrl + "guesses/" + this._latestResult?.guess.id,
-            {
-                win: -1
-            },
-            options
-        )
-        .subscribe({
-            next: (data: StatisticsDto) => { this._latestStatistics = data },
-            error: (error) => {
-                if(!(error instanceof HttpErrorResponse)) return;
-                switch(error.status) {
-                    // Unexpected error
-                    default:
-                        console.error(error.message);
-                        break;
+    public invalid(): Observable<boolean> {
+        return new Observable((observer: Observer<boolean>) => {
+            let options = {
+                headers: new HttpHeaders().set('Content-Type', 'application/json')
+            };
+            this.http.put<StatisticsDto>(
+                environment.apiUrl + "guesses/" + this._latestResult?.guess.id,
+                {
+                    win: -1
+                },
+                options
+            )
+            .subscribe({
+                next: (data: StatisticsDto) => {
+                    this._latestStatistics = data;
+                    observer.next(true);
+                },
+                error: (error) => {
+                    if(!(error instanceof HttpErrorResponse)) return;
+                    switch(error.status) {
+                        // Unexpected error
+                        default:
+                            console.error(error.message);
+                            break;
+                    }
                 }
-            }
+            });
         });
     }
 
     /**
      * If the result is neither asterix nor obelix
      */
-    public unaccountable() {
-        let options = {
-            headers: new HttpHeaders().set('Content-Type', 'application/json')
-        };
-        this.http.put<StatisticsDto>(
-            environment.apiUrl + "guesses/" + this._latestResult?.guess.id,
-            {
-                win: 0
-            },
-            options
-        )
-        .subscribe({
-            next: (data: StatisticsDto) => { this._latestStatistics = data },
-            error: (error) => {
-                if(!(error instanceof HttpErrorResponse)) return;
-                switch(error.status) {
-                    // Unexpected error
-                    default:
-                        console.error(error.message);
-                        break;
+    public unaccountable(): Observable<boolean> {
+        return new Observable((observer: Observer<boolean>) => {
+            let options = {
+                headers: new HttpHeaders().set('Content-Type', 'application/json')
+            };
+            this.http.put<StatisticsDto>(
+                environment.apiUrl + "guesses/" + this._latestResult?.guess.id,
+                {
+                    win: 0
+                },
+                options
+            )
+            .subscribe({
+                next: (data: StatisticsDto) => {
+                    this._latestStatistics = data;
+                    observer.next(true);
+                },
+                error: (error) => {
+                    if(!(error instanceof HttpErrorResponse)) return;
+                    switch(error.status) {
+                        // Unexpected error
+                        default:
+                            console.error(error.message);
+                            break;
+                    }
                 }
-            }
+            });
         });
     }
 

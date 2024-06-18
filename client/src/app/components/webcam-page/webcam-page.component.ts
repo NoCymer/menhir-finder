@@ -9,7 +9,7 @@ import { WebcamComponent } from "./webcam-card/webcam.component";
 
 
 @Component({
-    selector: 'login-page',
+    selector: 'webcam-page',
     templateUrl: './webcam-page.component.html',
     styleUrl: './webcam-page.component.scss',
     imports: [MatIcon, NavbarMobileComponent, LoginCardComponent, MainHeaderComponent, WebcamComponent],

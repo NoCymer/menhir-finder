@@ -10,9 +10,9 @@
                 <h1 class="text-center text-white text-xl font-bold mt-4 mb-5">C'est {{resultat}}</h1>
             </div>
             <div class="flex flex-col space-y-4 mt-5 w-full">
-                <button (click)="guessService.valid()" class="bg-green-300 text-black py-2 px-4 rounded w-full hover:bg-green-400 transition-all">Oui c'est bien {{resultat}}</button>
-                <button (click)="guessService.invalid()" class="bg-red-300 text-black py-2 px-4 rounded w-full hover:bg-red-400 transition-all">Non c'est {{invResultat}}</button>
-                <button (click)="guessService.unaccountable()" class="bg-blue-200 text-black py-2 px-4 rounded w-full hover:bg-blue-300 transition-all">C'est aucun des deux</button>
+                <button (click)="this.validate()" class="bg-green-300 text-black py-2 px-4 rounded w-full hover:bg-green-400 transition-all">Oui c'est bien {{resultat}}</button>
+                <button (click)="this.invalidate()" class="bg-red-300 text-black py-2 px-4 rounded w-full hover:bg-red-400 transition-all">Non c'est {{invResultat}}</button>
+                <button (click)="this.unaccountable()" class="bg-blue-200 text-black py-2 px-4 rounded w-full hover:bg-blue-300 transition-all">C'est aucun des deux</button>
             </div>
           </div>
     </div>

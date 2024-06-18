@@ -25,6 +25,27 @@ import { Router } from "@angular/router";
 
     ngOnInit(): void { }
     
+    public validate() {
+        this.guessService.valid().subscribe({
+            next: () => {
+                this.router.navigate(['result', 'stats'])
+            }
+        })
+    }
+    public invalidate() {
+        this.guessService.invalid().subscribe({
+            next: () => {
+                this.router.navigate(['result', 'stats'])
+            }
+        })
+    }
+    public unaccountable() {
+        this.guessService.unaccountable().subscribe({
+            next: () => {
+                this.router.navigate(['result', 'stats'])  
+            }
+        })
+    }
 
     private get getResultat() {
         return this.guessService.latestResult?.guess.guess ?? "";
